@@ -2,7 +2,9 @@ footer {
     padding: 70px 15px;
     background-color: #01143e;
 }
-
+.hidelink{
+    display:none
+}
 .footer-logo {
     flex: 0 0 100%;
     max-width: 100%;
