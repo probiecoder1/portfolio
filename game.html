@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Card Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: green;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+        }
+
+        #game {
+            width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #message {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #buttons {
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+        }
+
+        button {
+            width: 100px;
+            height: 40px;
+            margin: 10px;
+            font-size: 20px;
+        }
+
+        #player {
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+        }
+
+        #dealer {
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+        }
+
+        .card {
+            width: 100px;
+            height: 140px;
+            margin: 10px;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-image: url;
+            background-size: cover;
+        }
+
+        .back {
+            background-image: url;
+        }
+
+        .hidden {
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Card Game</h1>
+    <div id="game">
+        <p id="message">Welcome to the game!</p>
+        <div id="buttons">
+            <button id="start">Start</button>
+            <button id="hit" class="hidden">Hit</button>
+            <button id="stand" class="hidden">Stand</button>
+        </div>
+        <div id="player">
+            <p>Player: <span id="player-score">0</span></p>
+        </div>
+        <div id="dealer">
+            <p>Dealer: <span id="dealer-score">0</span></p>
+        </div>
+    </div>
+    <script>
+        // Define the card values and suits
+        const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+        const suits = ["C", "D", "H", "S"];
+
+        // Define the card images
+        const images = {
+            "AC": "cards/ace_of_clubs.png",
+            "AD": "cards/ace_of_diamonds.png",
+            "AH": "cards/ace_of_hearts.png",
+            "AS": "cards/ace_of_spades.png",
+            "2C": "cards/2_of_clubs.png",
+            "2D": "cards/2_of_diamonds.png",
+            "2H": "cards/2_of_hearts.png",
+            "2S": "cards/2_of_spades.png",
+            "3C": "cards/3_of_clubs.png",
+            "3D": "cards/3_of_diamonds.png",
+            "3H": "cards/3_of_hearts.png",
+            "3S": "cards/3_of_spades.png",
+            "4C": "cards/4_of_clubs.png",
+            "4D": "cards/4_of_diamonds.png",
+            "4H": "cards/4_of_hearts.png",
+            "4S": "cards/4_of_spades.png",
+            "5C": "cards/5_of_clubs.png",
+            "5D": "cards/5_of_diamonds.png",
+            "5H": "cards/5_of_hearts.png",
+            "5S": "cards/5_of_spades.png",
+            "6C": "cards/6_of_clubs.png",
+            "6D": "cards/6_of_diamonds.png",
+            "6H": "cards/6_of_hearts.png",
+            "6S": "cards/6_of_spades.png",
+            "7C": "cards/7_of_clubs.png",
+            "7D": "cards/7_of_diamonds.png",
+            "7H": "cards/7_of_hearts.png",
+            "7S": "cards/7_of_spades.png",
+            "8C": "cards/8_of_clubs.png",
+            "8D": "cards/8_of_diamonds.png",
+            "8H": "cards/8_of_hearts.png",
+            "8S": "cards/8_of_spades.png",
+            "9C": "cards/9_of_clubs.png",
+            "9D": "cards/9_of_diamonds.png",
+            "9H": "cards/9_of_hearts.png",
+            "9S": "cards/9_of_spades.png",
+            "10C": "cards/10_of_clubs.png",
+            "10D": "cards/10_of_diamonds.png",
+            "10H": "cards/10_of_hearts.png",
+            "10S": "cards/10_of_spades.png",
+            "JC": "cards/jack_of_clubs.png",
+            "JD": "cards/jack_of_diamonds.png",
+            "JH": "cards/jack_of_hearts.png",
+            "JS": "cards/jack_of_spades.png",
+            "QC": "cards/queen_of_clubs.png",
+            "QD": "cards/queen_of_diamonds.png",
+            "QH": "cards/queen_of_hearts.png",
+            "QS": "cards/queen_of_spades.png",
+            "KC": "cards/king_of_clubs.png",
+            "KD": "cards/king_of_diamonds.png",
+            "KH": "cards/king_of_hearts.png",
+            "KS": "cards/king_of_spades.png",
+            "back": "cards/back.png"
+        };
+
+        // Define the card points
+        const points = {
+            "A": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "6": 6,
+            "7": 7,
+            "8": 8,
+            "9": 9,
+            "10": 10,
+            "J": 10,
+            "Q": 10,
+            "K": 10
+        };
+
+        // Define the game elements
+        const message = document.getElementById("message");
+        const start = document.getElementById("start");
+        const hit = document.getElementById("hit");
+        const stand = document.getElementById("stand");
+        const player = document.getElementById("player");
+        const dealer = document.getElementById("dealer");
+        const playerScore = document.getElementById("player-score");
+        const dealerScore = document.getElementById("dealer-score");
+
+        // Define the game variables
+        let deck = [];
+        let playerHand = [];
+        let dealerHand = [];
+        let playerTotal = 0;
+        let dealerTotal = 0;
+        let gameOver = false;
+
+        // Define the game functions
+        function createDeck() {
+            // Create a new deck of cards
+            deck = [];
+            for (let value of values) {
+                for (let suit of suits) {
+                    deck.push(value + suit);
+                }
+            }
+        }
+
+        function shuffleDeck() {
+            // Shuffle the deck of cards
+            for (let i = deck.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                let temp = deck[i];
+                deck[i] = deck[j];
+                deck[j] = temp;
+            }
+        }
+
+        function dealCard(hand) {
+            // Deal a card from the deck to the hand
+            let card = deck.pop();
+            hand.push(card);
+            return card;
+        }
+
+        function showCard(card, element) {
+            // Show a card on the element
+            let image = document.createElement("img");
+            image.src = images[card];
+            image.className = "card";
+            element.appendChild(image);
+        }
+
+        function hideCard(card, element) {
+            // Hide a card on the element
+            let image = document.createElement("img");
+            image.src = images["back"];
+            image.className = "card back";
+            element.appendChild(image);
+        }
+
+        function removeCards(element) {
+            // Remove all cards from the element
+            while (element.firstChild) {
+                element.removeChild(element.firstChild);
+            }
+        }
+
+        function calculateTotal(hand) {
+            // Calculate the total points of a hand
+            let total = 0;
+            let ace = false;
+            for (let card of hand) {
+                let value = card[0];
+                total += points[value];
+                if (value === "A") {
+                    ace = true;
+                }
+            }
+            if (ace && total + 10 <= 21) {
+                total += 10;
+            }
+            return total;
+        }
