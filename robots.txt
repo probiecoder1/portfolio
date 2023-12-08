@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /$
+Allow: /sitemap.xml
+Allow: /img/
+Allow: /css/
+Allow: /js/
+Allow: /lightbox/
+Disallow: /cgi-bin/
+Disallow: /cdn-cgi/
+Sitemap: https://www.roshishparajuli.com.np/sitemap.xml
