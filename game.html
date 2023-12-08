@@ -94,61 +94,12 @@
         const suits = ["C", "D", "H", "S"];
 
         // Define the card images
-        const images = {
-            "AC": "cards/ace_of_clubs.png",
-            "AD": "cards/ace_of_diamonds.png",
-            "AH": "cards/ace_of_hearts.png",
-            "AS": "cards/ace_of_spades.png",
-            "2C": "cards/2_of_clubs.png",
-            "2D": "cards/2_of_diamonds.png",
-            "2H": "cards/2_of_hearts.png",
-            "2S": "cards/2_of_spades.png",
-            "3C": "cards/3_of_clubs.png",
-            "3D": "cards/3_of_diamonds.png",
-            "3H": "cards/3_of_hearts.png",
-            "3S": "cards/3_of_spades.png",
-            "4C": "cards/4_of_clubs.png",
-            "4D": "cards/4_of_diamonds.png",
-            "4H": "cards/4_of_hearts.png",
-            "4S": "cards/4_of_spades.png",
-            "5C": "cards/5_of_clubs.png",
-            "5D": "cards/5_of_diamonds.png",
-            "5H": "cards/5_of_hearts.png",
-            "5S": "cards/5_of_spades.png",
-            "6C": "cards/6_of_clubs.png",
-            "6D": "cards/6_of_diamonds.png",
-            "6H": "cards/6_of_hearts.png",
-            "6S": "cards/6_of_spades.png",
-            "7C": "cards/7_of_clubs.png",
-            "7D": "cards/7_of_diamonds.png",
-            "7H": "cards/7_of_hearts.png",
-            "7S": "cards/7_of_spades.png",
-            "8C": "cards/8_of_clubs.png",
-            "8D": "cards/8_of_diamonds.png",
-            "8H": "cards/8_of_hearts.png",
-            "8S": "cards/8_of_spades.png",
-            "9C": "cards/9_of_clubs.png",
-            "9D": "cards/9_of_diamonds.png",
-            "9H": "cards/9_of_hearts.png",
-            "9S": "cards/9_of_spades.png",
-            "10C": "cards/10_of_clubs.png",
-            "10D": "cards/10_of_diamonds.png",
-            "10H": "cards/10_of_hearts.png",
-            "10S": "cards/10_of_spades.png",
-            "JC": "cards/jack_of_clubs.png",
-            "JD": "cards/jack_of_diamonds.png",
-            "JH": "cards/jack_of_hearts.png",
-            "JS": "cards/jack_of_spades.png",
-            "QC": "cards/queen_of_clubs.png",
-            "QD": "cards/queen_of_diamonds.png",
-            "QH": "cards/queen_of_hearts.png",
-            "QS": "cards/queen_of_spades.png",
-            "KC": "cards/king_of_clubs.png",
-            "KD": "cards/king_of_diamonds.png",
-            "KH": "cards/king_of_hearts.png",
-            "KS": "cards/king_of_spades.png",
-            "back": "cards/back.png"
-        };
+        const images = {};
+        for (let value of values) {
+            for (let suit of suits) {
+                images[value + suit] = `^${value + suit}^`;
+            }
+        }
 
         // Define the card points
         const points = {
@@ -224,7 +175,7 @@
         function hideCard(card, element) {
             // Hide a card on the element
             let image = document.createElement("img");
-            image.src = images["back"];
+            image.src = images[card];
             image.className = "card back";
             element.appendChild(image);
         }
@@ -252,3 +203,98 @@
             }
             return total;
         }
+
+        function updateScore() {
+            // Update the score of the player and the dealer
+            playerTotal = calculateTotal(playerHand);
+            dealerTotal = calculateTotal(dealerHand);
+            playerScore.textContent = playerTotal;
+            dealerScore.textContent = dealerTotal;
+        }
+
+        function checkWinner() {
+            // Check the winner of the game
+            if (playerTotal > 21) {
+                message.textContent = "You busted! You lose!";
+                gameOver = true;
+            } else if (dealerTotal > 21) {
+                message.textContent = "Dealer busted! You win!";
+                gameOver = true;
+            } else if (gameOver) {
+                if (playerTotal > dealerTotal) {
+                    message.textContent = "You win!";
+                } else if (playerTotal < dealerTotal) {
+                    message.textContent = "You lose!";
+                } else {
+                    message.textContent = "It's a tie!";
+                }
+            }
+        }
+
+        function startGame() {
+            // Start a new game
+            gameOver = false;
+            createDeck();
+            shuffleDeck();
+            playerHand = [];
+            dealerHand = [];
+            removeCards(player);
+            removeCards(dealer);
+            dealCard(playerHand);
+            dealCard(dealerHand);
+            dealCard(playerHand);
+            dealCard(dealerHand);
+            showCard(playerHand[0], player);
+            showCard(playerHand[1], player);
+            showCard(dealerHand[0], dealer);
+            hideCard(dealerHand[1], dealer);
+            updateScore();
+            message.textContent = "Hit or stand?";
+            start.className = "hidden";
+            hit.className = "";
+            stand.className = "";
+        }
+
+        function hitGame() {
+            // Hit a card
+            if (!gameOver) {
+                dealCard(playerHand);
+                removeCards(player);
+                for (let card of playerHand) {
+                    showCard(card, player);
+                }
+                updateScore();
+                checkWinner();
+            }
+        }
+
+        function standGame() {
+            // Stand and let the dealer play
+            if (!gameOver) {
+                gameOver = true;
+                removeCards(dealer);
+                for (let card of dealerHand) {
+                    showCard(card, dealer);
+                }
+                while (dealerTotal < 17) {
+                    dealCard(dealerHand);
+                    removeCards(dealer);
+                    for (let card of dealerHand) {
+                        showCard(card, dealer);
+                    }
+                    updateScore();
+                }
+                checkWinner();
+                start.className = "";
+                hit.className = "hidden";
+                stand.className = "hidden";
+            }
+        }
+
+        // Add event listeners to the buttons
+        start.addEventListener("click", startGame);
+        hit.addEventListener("click", hitGame);
+        stand.addEventListener("click", standGame);
+    </script>
+</body>
+</html>
