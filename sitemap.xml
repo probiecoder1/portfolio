@@ -1,16 +1,62 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+<?xml version="1.0" encoding="UTF-8" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <!-- Home Page -->
+   <url>
+      <loc>https://www.roshishparajuli.com.np</loc>
+      <changefreq>weekly</changefreq>
+      <priority>1.0</priority>
+   </url>
+   
+   <!-- About Page -->
+   <url>
+      <loc>https://www.roshishparajuli.com.np#about</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   
+   <!-- Services Page -->
+   <url>
+      <loc>https://www.roshishparajuli.com.np#services</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
 
+   <!-- Portfolio Page -->
+   <url>
+      <loc>https://www.roshishparajuli.com.np#portfolio</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.7</priority>
+   </url>
 
-<url>
-  <loc>https://www.roshishparajuli.com.np/</loc>
-  <lastmod>2023-08-27T05:51:00+00:00</lastmod>
-</url>
+   <!-- Blog Page -->
+   <url>
+      <loc>https://www.roshishparajuli.com.np#blog</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.7</priority>
+   </url>
 
+   <!-- Contact Page -->
+   <url>
+      <loc>https://www.roshishparajuli.com.np#contact</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.6</priority>
+   </url>
+
+   <!-- Blog Posts -->
+   <url>
+      <loc>https://www.roshishparajuli.com.np/blog/importance-of-digital-presence</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.5</priority>
+   </url>
+   <url>
+      <loc>https://www.roshishparajuli.com.np/blog/why-python-is-popular</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.5</priority>
+   </url>
+   <url>
+      <loc>https://www.roshishparajuli.com.np/blog/freelancing-evolution</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.5</priority>
+   </url>
 
 </urlset>
