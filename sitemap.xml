@@ -42,19 +42,13 @@
       <priority>0.6</priority>
    </url>
 
-   <!-- Blog Posts -->
    <url>
-      <loc>https://www.roshishparajuli.com.np/blog/importance-of-digital-presence</loc>
+      <loc>https://www.roshishparajuli.com.np/game.html</loc>
       <changefreq>monthly</changefreq>
       <priority>0.5</priority>
    </url>
    <url>
-      <loc>https://www.roshishparajuli.com.np/blog/why-python-is-popular</loc>
-      <changefreq>monthly</changefreq>
-      <priority>0.5</priority>
-   </url>
-   <url>
-      <loc>https://www.roshishparajuli.com.np/blog/freelancing-evolution</loc>
+      <loc>https://www.roshishparajuli.com.np/latestworks.html</loc>
       <changefreq>monthly</changefreq>
       <priority>0.5</priority>
    </url>
